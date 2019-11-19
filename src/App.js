@@ -1,26 +1,45 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import TaskList from './components/TaskList';
+import TaskForm from './components/TaskForm';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+export default class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      list : []
+    }
+  }
+
+  createTask = (task) => {
+    var list = this.state.list;
+
+    list.push(task);
+
+    this.setState({"list" : list})
+
+  }
+
+  removeTask = (id) => {
+    var list = this.state.list;
+    list.splice(id,1);
+    this.setState({
+      list : list,
+    })
+
+  }
+
+
+  render() {
+    return <div className="title">
+      <h1> TO DO List </h1>
+      <TaskForm create={this.createTask} />
+      <TaskList remove={this.removeTask} tasks={this.state.list} />
     </div>
-  );
+  }
 }
 
-export default App;
+
